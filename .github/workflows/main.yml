@@ -22,3 +22,42 @@ jobs:
       - name: Build and test with Maven
         run: mvn clean verify --file ./TD/TD2/simple-api/pom.xml
 
+  build-and-push-docker-images:
+    needs: test-backend
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./TD/TD2/simple-api
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-simple-api:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-simple-api:${{ github.sha }}
+          push: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Build and push database image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./TD/TD2/database
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-database:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-database:${{ github.sha }}
+          push: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Build and push http-server image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./TD/TD2/http-server
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-http-server:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-http-server:${{ github.sha }}
+          push: ${{ github.ref == 'refs/heads/main' }}
+
+
