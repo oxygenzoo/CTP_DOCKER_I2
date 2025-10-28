@@ -25,4 +25,5 @@ jobs:
           -Dsonar.organization=<oxygenzoo> \
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-          --file ./CTP2/simple-api/pom.xml
+          --file ../CTP2/simple-api/pom.xml
+
