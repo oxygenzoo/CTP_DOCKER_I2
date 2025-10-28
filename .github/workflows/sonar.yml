@@ -1,0 +1,28 @@
+name: SonarCloud
+
+on:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+
+      - name: Run SonarCloud Scan
+        run: mvn -B verify sonar:sonar \
+          -Dsonar.projectKey=<oxygenzoo_CTP_DOCKER_I2> \
+          -Dsonar.organization=<oxygenzoo> \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+          --file ./CTP2/simple-api/pom.xml
