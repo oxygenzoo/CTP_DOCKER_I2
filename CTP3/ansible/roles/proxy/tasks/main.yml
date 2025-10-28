@@ -1,0 +1,16 @@
+- name: Run Traefik reverse proxy
+  docker_container:
+    name: proxy
+    image: traefik:v2.10
+    command:
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--api.insecure=true"
+    networks:
+      - name: my_network
+    state: started
+    restart_policy: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    published_ports: []
+

@@ -1,0 +1,13 @@
+- name: Run frontend container
+  docker_container:
+    name: frontend
+    image: oxygenzoo/tp-devops-http-frontend:latest
+    networks:
+      - name: my_network
+    restart_policy: always
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.front.rule: "Host(`enzo.guignabert.takima.cloud`)"
+      traefik.http.routers.front.entrypoints: "web"
+      traefik.http.services.front.loadbalancer.server.port: "80"
+

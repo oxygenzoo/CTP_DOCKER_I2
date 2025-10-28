@@ -1,0 +1,21 @@
+- name: Run backend API
+  docker_container:
+    name: backend
+    image: oxygenzoo/tp-devops-simple-api:latest
+    env:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://database:5432/mydb"
+      SPRING_DATASOURCE_USERNAME: "admin"
+      SPRING_DATASOURCE_PASSWORD: "admin"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: "update"
+    networks:
+      - name: my_network
+    published_ports:
+      - "8080:8080"
+    state: started
+    restart_policy: always
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.api.rule: "Host(`enzo.guignabert.takima.cloud`) && PathPrefix(`/students`)"
+      traefik.http.routers.api.entrypoints: "web"
+      traefik.http.services.api.loadbalancer.server.port: "8080"
+

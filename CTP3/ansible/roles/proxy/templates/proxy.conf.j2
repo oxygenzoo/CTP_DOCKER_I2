@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+    ServerName enzo.guignabert.takima.cloud
+
+    ProxyPreserveHost On
+
+    # API Backend
+    ProxyPass "/api" "http://backend:3000/api"
+    ProxyPassReverse "/api" "http://backend:3000/api"
+
+    # Optionnel: redirection du front plus tard
+    ProxyPass "/" "http://backend:3000/"
+    ProxyPassReverse "/" "http://backend:3000/"
+</VirtualHost>
