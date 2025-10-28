@@ -20,7 +20,7 @@ jobs:
           java-version: "21"
 
       - name: Build and test with Maven
-        run: mvn clean verify --file ./CTP2/simple-api/pom.xml
+        run: mvn clean verify --file ../CTP2/simple-api/pom.xml
 
   build-and-push-docker-images:
     needs: test-backend
