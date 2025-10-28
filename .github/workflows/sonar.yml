@@ -21,9 +21,10 @@ jobs:
 
       - name: Run SonarCloud Scan
         run: mvn -B verify sonar:sonar \
-          -Dsonar.projectKey=<oxygenzoo_CTP_DOCKER_I2> \
-          -Dsonar.organization=<oxygenzoo> \
+          -Dsonar.projectKey=oxygenzoo_CTP_DOCKER_I2 \
+          -Dsonar.organization=oxygenzoo \
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
           --file ../CTP2/simple-api/pom.xml
+
 
