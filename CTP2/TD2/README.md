@@ -206,5 +206,3 @@ Dans GitHub Secrets : `SONAR_TOKEN`.
 * Utilisation de secrets GitHub pour sécuriser les identifiants
 * Mise en place d’une analyse qualité avec SonarCloud
 
-```
-
